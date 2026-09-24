@@ -7,15 +7,22 @@ import { Body,
     ParseIntPipe, 
     Patch, 
     Post, 
-    Query} from '@nestjs/common';
+    Query,
+    UseGuards
+} from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import type { User } from '../../types/usersType.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
+import { AuthGuard } from '../common/guards/auth.guard.js';
 
 @Controller('users')
 export class UsersController {
     constructor (private readonly usersService: UsersService){}
+
+
+    
+    @UseGuards(AuthGuard)
     @Get()
     @HttpCode(200)
     findAll() : User[]{
